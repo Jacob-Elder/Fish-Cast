@@ -5,7 +5,8 @@ angular.module("fish-cast", ["ui.router"])
 	$stateProvider
 	.state("home", {
 		url: "/",
-		templateUrl: "app/views/landing.html"
+		templateUrl: "app/views/landing.html",
+		controller: "landingCtrl"
 	})
 
 	$locationProvider.html5Mode(true);

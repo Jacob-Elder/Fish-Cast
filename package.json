@@ -1,0 +1,22 @@
+{
+  "name": "fish-cast",
+  "version": "1.0.0",
+  "description": "Get weather and tide info for your next fishing trip.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jacob-Elder/Fish-Cast.git"
+  },
+  "author": "Jacob Elder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jacob-Elder/Fish-Cast/issues"
+  },
+  "homepage": "https://github.com/Jacob-Elder/Fish-Cast#readme",
+  "dependencies": {
+    "angular-simple-logger": "^0.1.7"
+  }
+}

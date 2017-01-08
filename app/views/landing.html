@@ -1,15 +1,23 @@
 <h1>Fish Cast</h1>
-<h2>All the weather info you need for fishing</h2>
 
-<form ng-submit="$scope.search">
-	<label for="location">Location: 
-		<input type="text" name="location" ng-model="$scope.location">
-	</label>
-	<label for="date">Date: 
-		<input type="date" name="date" ng-model="$scope.date">
-	</label>
-</form>
+<div class="landing-bottom">
 
-<div id="map">
-	<ui-gmap-google-map center="map.center" zoom="map.zoom"></ui-gmap-google-map>
+	<h3>
+		Search here to find weather forecasts and tide charts for your next fishing trip. 
+	</h3>
+
+	<form class="searchForm" ng-submit="$scope.search">
+		<label for="location">Location: 
+			<input type="text" name="location" ng-model="$scope.location">
+		</label>
+		<label for="date">Date: 
+			<input type="date" name="date" ng-model="$scope.date">
+		</label>
+		<br>
+		<input type="submit" value="search" class="btn btn-lg btn-primary">
+	</form>
 </div>
+
+<!-- <div id="map_canvas">
+	<ui-gmap-google-map center="map.center" zoom="map.zoom"></ui-gmap-google-map>
+</div> -->

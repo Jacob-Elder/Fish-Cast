@@ -6,18 +6,14 @@
 		Search here to find weather forecasts and tide charts for your next fishing trip. 
 	</h3>
 
-	<form class="searchForm" ng-submit="$scope.search">
+	<form class="searchForm" ng-submit="search()">
 		<label for="location">Location: 
-			<input type="text" name="location" ng-model="$scope.location">
+			<input type="text" name="location" ng-model="location">
 		</label>
 		<label for="date">Date: 
-			<input type="date" name="date" ng-model="$scope.date">
+			<input type="date" name="date" ng-model="date">
 		</label>
 		<br>
 		<input type="submit" value="search" class="btn btn-lg btn-primary">
 	</form>
 </div>
-
-<!-- <div id="map_canvas">
-	<ui-gmap-google-map center="map.center" zoom="map.zoom"></ui-gmap-google-map>
-</div> -->

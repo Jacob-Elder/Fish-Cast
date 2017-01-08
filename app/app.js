@@ -3,10 +3,15 @@ angular.module("fish-cast", ["ui.router", 'uiGmapgoogle-maps'])
 			$urlRouterProvider.otherwise("/");
 
 	$stateProvider
-	.state("home", {
+	.state("landing", {
 		url: "/",
 		templateUrl: "app/views/landing.html",
 		controller: "landingCtrl"
+	})
+	.state("results", {
+		url: "/results",
+		templateUrl: "app/views/results.html",
+		controller: "resultsCtrl"
 	})
 
 	$locationProvider.html5Mode(true);

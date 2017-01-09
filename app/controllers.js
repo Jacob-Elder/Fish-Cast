@@ -3,30 +3,28 @@ angular.module("fish-cast")
 
 	this.location;
 	this.date = Date.now();
-    this.data;
+    this.forecast;
     this.lat;
     this.lng;
 
     var searchService = this;
 
     this.search = function(location){
-        this.location = location;
+        searchService.location = location;
 
         $http({
             method: 'GET',
-            url: 'http://api.wunderground.com/api/8511c7dcba1454f3/forecast10day/q/CA/San_Francisco.json'
+            url: 'http://api.wunderground.com/api/8511c7dcba1454f3/forecast10day/q/CA/' + searchService.location + '.json'
         }).then(function successCallback(response) {
-            console.log(response);
-        });
-
-        $http({
-            method: 'GET',
-            url: 'http://api.wunderground.com/api/8511c7dcba1454f3/conditions/q/CA/San_Francisco.json'
-        }).then(function successCallback(response) {
-            console.log(response.data.current_observation.display_location.latitude);
-            searchService.lat = response.data.current_observation.display_location.latitude;
-            searchService.lng = response.data.current_observation.display_location.longitude;
-            $state.go('results');
+            searchService.forecast = response.data.forecast.simpleforecast.forecastday;
+            $http({
+                method: 'GET',
+                url: 'http://api.wunderground.com/api/8511c7dcba1454f3/conditions/q/CA/' + searchService.location + '.json'
+            }).then(function successCallback(response) {
+                searchService.lat = response.data.current_observation.display_location.latitude;
+                searchService.lng = response.data.current_observation.display_location.longitude;
+                $state.go('results');
+            });
         });
 
     }
@@ -47,7 +45,7 @@ angular.module("fish-cast")
     console.log("resultsCtrl loaded!");
     $scope.lat = searchService.lat;
     $scope.lng = searchService.lng;
-    console.log($scope.lat);
-    console.log($scope.lng);
     $scope.map = { center: { latitude: $scope.lat, longitude: $scope.lng }, zoom: 8 };
+    $scope.forecast = searchService.forecast;
+    console.log($scope.forecast);
 })

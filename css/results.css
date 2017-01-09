@@ -1,4 +1,14 @@
 .angular-google-map-container {
-        height: 400px;
-        width: 35%;
+    height: 400px;
+    width: 400px;
+    float: left;
+}
+
+.daily_forecast {
+	background-color: white;
+	clear: both;
+}
+
+.daily_forecast div {
+	display: block;
 }

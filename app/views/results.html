@@ -3,3 +3,10 @@
 <div id="map_canvas">
 	<ui-gmap-google-map center="map.center" zoom="map.zoom"></ui-gmap-google-map>
 </div>
+
+<div class="daily_forecast" ng-repeat="day in forecast">
+	<div>
+		<h3>{{day.date.weekday}}  {{day.date.month}}/{{day.date.day}}</h3>
+		<img src='{{day.icon_url}}'>
+	</div>
+</div>

@@ -1,14 +1,30 @@
 .angular-google-map-container {
     height: 400px;
     width: 400px;
-    float: left;
+    margin: 10px auto;
+}
+
+.city {
+	color: white;
 }
 
 .daily_forecast {
 	background-color: white;
+	width: 80%;
+	margin-left: 10%;
 	clear: both;
 }
 
 .daily_forecast div {
 	display: block;
+}
+
+.daily_forecast div div p {
+	display: inline;
+	margin: 12px 10% 20px;
+
+}
+
+.daily_forecast p {
+	font-size: 1.6em;
 }

@@ -3,17 +3,16 @@
 <div class="landing-bottom">
 
 	<h3>
-		Search here to find weather forecasts and tide charts for your next fishing trip. 
+		Search a city to find weather forecasts and tide charts for your next fishing trip. 
 	</h3>
 
 	<form class="searchForm" ng-submit="search()">
 		<label for="location">Location: 
 			<input type="text" name="location" ng-model="location">
 		</label>
-		<label for="date">Date: 
-			<input type="date" name="date" ng-model="date">
-		</label>
-		<br>
-		<input type="submit" value="search" class="btn btn-lg btn-primary">
+		<input type="submit" value="search" class="btn btn-primary">
 	</form>
+
+	<h4 class="error" ng-if="error">Uh Oh! Couldn't seem to find that city. Try again.</h4>
+
 </div>

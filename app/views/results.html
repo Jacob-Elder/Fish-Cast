@@ -1,12 +1,20 @@
-<h1>Results!</h1>
+<h1>Fish Cast</h1>
 
 <div id="map_canvas">
 	<ui-gmap-google-map center="map.center" zoom="map.zoom"></ui-gmap-google-map>
 </div>
 
+<h2 class="city">{{city}}</h2>
+
 <div class="daily_forecast" ng-repeat="day in forecast">
 	<div>
 		<h3>{{day.date.weekday}}  {{day.date.month}}/{{day.date.day}}</h3>
 		<img src='{{day.icon_url}}'>
+		<h3>{{day.conditions}}</h3>
+		<div>
+			<p><strong>Low:</strong> {{day.low.fahrenheit}}&degF</p>
+			<p><strong>High:</strong> {{day.high.fahrenheit}}&degF</p>
+		</div>
+		<p><strong>Wind:</strong> {{day.avewind.mph}}-{{day.maxwind.mph}}mph {{day.avewind.dir}}</p>
 	</div>
 </div>

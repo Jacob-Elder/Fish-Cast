@@ -6,6 +6,7 @@
 
 .city {
 	color: white;
+	font-size: 3em;
 }
 
 .daily_forecast {
@@ -27,4 +28,29 @@
 
 .daily_forecast p {
 	font-size: 1.6em;
+}
+
+.results_section {
+	background-color: blue;
+	width: 90%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-left: 5%;
+	margin-top: 0;
+}
+
+.tab {
+	height: 80px;
+	width: 45%;
+	background-color: rgba(12, 25, 38, 0.7);
+	display: inline-block;
+	margin-bottom: -5px;
+	margin-left: 0;
+	margin-right: 0;
+	border-radius: 20% 20% 0 0;
+	color: white;
+}
+
+.selected {
+	background-color: rgba(12, 25, 38, 1);
 }

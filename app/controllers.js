@@ -28,6 +28,8 @@ angular.module("fish-cast")
                     //Loop through the forecasts and make the date format the same as from the tides API
                     searchService.forecast.forEach(function(forecast){
                         forecast.tides = [];
+                        forecast.lowTides = [];
+                        forecast.highTides = [];
                         forecast.formattedDate = forecast.date.pretty;
                         forecast.formattedDate = forecast.formattedDate.split(' ');
                         //Change the date to number format
@@ -96,8 +98,24 @@ angular.module("fish-cast")
                                         searchService.forecast[i].tides.push(tide);
                                     }
                                 }
+                                for (var i = 0; i < searchService.forecast.length; i++){
+                                    for (var j = 0; j < searchService.forecast[i].tides.length; j++){
+                                        if (searchService.forecast[i].tides[j].type == "Low") {
+                                            searchService.forecast[i].lowTides.push(searchService.forecast[i].tides[j]);
+                                            searchService.forecast[i].tides.splice(j, 1);
+
+                                        }
+                                        else {
+                                            searchService.forecast[i].highTides.push(searchService.forecast[i].tides[j]);
+                                            searchService.forecast[i].tides.splice(j, 1);
+                                        }
+                                    }
+                                }
                             });
-                            $timeout(function(){$state.go('results')}, 500);
+                            for (var i = 0; i < searchService.forecast.length; i++) {
+                                searchService.forecast[i].lowTides.sort(function(a,b){return a.dt - b.dt});
+                            }
+                            $timeout(function(){$state.go('results')}, 1000);
                         });
                     });
                 }

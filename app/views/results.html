@@ -26,5 +26,13 @@
 			</div>
 			<p><strong>Wind:</strong> {{day.avewind.mph}}-{{day.maxwind.mph}}mph {{day.avewind.dir}}</p>
 		</div>
+		<div id="tide_section">
+			<h4><strong>Low Tides:</strong></h4>
+			<p ng-repeat="lowTide in day.lowTides">{{lowTide.dt * 1000 | date:'h:mm a'}} : {{lowTide.height}} ft</p>
+		</div>
+		<div id="tide_section">
+			<h4><strong>High Tides:</strong></h4>
+			<p ng-repeat="highTide in day.highTides">{{highTide.dt * 1000 | date:'h:mm a'}} : {{highTide.height}} ft</p>
+		</div>
 	</div>
 </div>

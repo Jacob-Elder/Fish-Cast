@@ -13,7 +13,6 @@
 	background-color: white;
 	width: 80%;
 	margin-left: 10%;
-	clear: both;
 }
 
 .daily_forecast div {
@@ -53,4 +52,12 @@
 
 .selected {
 	background-color: rgba(12, 25, 38, 1);
+}
+
+#tide_section {
+	height: 100px;
+	width: auto;
+	display: inline-block;
+	margin: 10px 8%;
+	padding-top: 0;
 }

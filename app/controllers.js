@@ -122,6 +122,10 @@ angular.module("fish-cast")
                 }
         });
 
+    };
+
+    this.tripSearch = function(start, end){
+        console.log("this is the searchService trip search!" + start + " " + end);
     }
 
 })
@@ -153,9 +157,12 @@ angular.module("fish-cast")
     console.log("resultsCtrl loaded!");
     $scope.lat = searchService.lat;
     $scope.lng = searchService.lng;
+    $scope.location = searchService.location;
     $scope.city = searchService.city;
     $scope.map = { center: { latitude: $scope.lat, longitude: $scope.lng }, zoom: 11 };
     $scope.forecast = searchService.forecast;
+    $scope.start_date;
+    $scope.end_date;
     console.log($scope.forecast);
 
 
@@ -170,6 +177,26 @@ angular.module("fish-cast")
     $scope.clickTripPlanner = function(){
         $scope.showTripPlanner = true;
         $scope.show10Day = false;
+    }
+
+    $scope.tripSearch = function(){
+        // var start_month = ($scope.start_date.getMonth() + 1).toString();
+        // var start_day = $scope.start_date.getDate().toString();
+        // var end_month = ($scope.end_date.getMonth() + 1).toString();
+        // var end_day = $scope.end_date.getDate().toString();
+        // if(start_month.length == 1) {start_month = "0" + start_month};
+        // if(start_day.length == 1) {start_day = "0" + start_day};
+        // if(end_month.length == 1) {end_month = "0" + end_month};
+        // if(end_day.length == 1) {end_day = "0" + end_day};
+        var start_month = ("0" + ($scope.start_date.getMonth() + 1)).slice(-2);
+        var end_month = ("0" + ($scope.end_date.getMonth() + 1)).slice(-2);
+        var start_day = ("0" + $scope.start_date.getDate()).slice(-2);
+        var end_day = ("0" + $scope.end_date.getDate()).slice(-2);
+        $scope.start_date = start_month + start_day;
+        $scope.end_date = end_month + end_day;        
+        console.log($scope.start_date);
+        console.log($scope.end_date);
+        searchService.tripSearch($scope.start_date, $scope.end_date);
     }
 
 

@@ -6,9 +6,8 @@ angular.module("fish-cast")
     this.lat;
     this.lng;
     this.error = false;
-    this.minHeight = null;
-    this.maxHeight = null;
     this.tides;
+    this.tripResults;
 
     var searchService = this;
 
@@ -124,8 +123,8 @@ angular.module("fish-cast")
 
     };
 
-    this.tripSearch = function(start, end){
-        console.log("this is the searchService trip search!" + start + " " + end);
+    this.tripSearch = function(tripResults){
+        searchService.tripResults = tripResults;
     }
 
 })
@@ -153,7 +152,7 @@ angular.module("fish-cast")
     };
 
 })
-.controller('resultsCtrl', function($scope, searchService) {
+.controller('resultsCtrl', function($scope, searchService, $http) {
     console.log("resultsCtrl loaded!");
     $scope.lat = searchService.lat;
     $scope.lng = searchService.lng;
@@ -161,10 +160,16 @@ angular.module("fish-cast")
     $scope.city = searchService.city;
     $scope.map = { center: { latitude: $scope.lat, longitude: $scope.lng }, zoom: 11 };
     $scope.forecast = searchService.forecast;
-    $scope.start_date;
-    $scope.end_date;
     console.log($scope.forecast);
 
+    $scope.start_date;
+    $scope.end_date;
+    $scope.formatted_start_date;
+    $scope.formatted_end_date;
+    $scope.start_epoch;
+    $scope.end_epoch;
+    $scope.tripLength;
+    $scope.tripResults;
 
 
     $scope.show10Day = true;
@@ -179,24 +184,43 @@ angular.module("fish-cast")
         $scope.show10Day = false;
     }
 
-    $scope.tripSearch = function(){
-        // var start_month = ($scope.start_date.getMonth() + 1).toString();
-        // var start_day = $scope.start_date.getDate().toString();
-        // var end_month = ($scope.end_date.getMonth() + 1).toString();
-        // var end_day = $scope.end_date.getDate().toString();
-        // if(start_month.length == 1) {start_month = "0" + start_month};
-        // if(start_day.length == 1) {start_day = "0" + start_day};
-        // if(end_month.length == 1) {end_month = "0" + end_month};
-        // if(end_day.length == 1) {end_day = "0" + end_day};
-        var start_month = ("0" + ($scope.start_date.getMonth() + 1)).slice(-2);
-        var end_month = ("0" + ($scope.end_date.getMonth() + 1)).slice(-2);
-        var start_day = ("0" + $scope.start_date.getDate()).slice(-2);
-        var end_day = ("0" + $scope.end_date.getDate()).slice(-2);
-        $scope.start_date = start_month + start_day;
-        $scope.end_date = end_month + end_day;        
-        console.log($scope.start_date);
-        console.log($scope.end_date);
-        searchService.tripSearch($scope.start_date, $scope.end_date);
+    $scope.tripSearch = function(a,b){
+        $scope.start_date = new Date(a);
+        $scope.end_date = new Date(b);
+        $scope.formatted_start_date = getFormattedDate($scope.start_date);
+        $scope.formatted_end_date = getFormattedDate($scope.end_date);
+        $scope.start_epoch = Date.parse($scope.start_date)/1000;
+        $scope.end_epoch = Date.parse($scope.end_date)/1000;
+        $scope.tripLength = $scope.end_epoch - $scope.start_epoch;
+        console.log($scope.start_epoch);
+        console.log($scope.end_epoch);
+        console.log("trip length: " + $scope.tripLength);
+        //HTTP Request for the trip's weather forecast
+        $http({
+            method: "GET",
+            url: "http://api.wunderground.com/api/8511c7dcba1454f3/planner_" + $scope.formatted_start_date + $scope.formatted_end_date + "/q/CA/" + $scope.location + ".json"
+        }).then(function(response){
+            console.log(response);
+            $scope.tripResults = response.data.trip;
+            //HTTP request for the tides throughout the trip;
+            $http({
+                method: "GET",
+                url: "https://www.worldtides.info/api?extremes&lat=" + $scope.lat + "&lon=" + $scope.lng + "&start=" + $scope.start_epoch + "&length=" + $scope.tripLength + "&key=aa7eeccd-b1cc-4752-9e59-cdcfa7e3ddaf"
+            }).then(function(response){
+                console.log(response);
+            });
+        });
+
+
+        searchService.tripSearch();
+    }
+
+    function getFormattedDate(date) {
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+        return month + day;
     }
 
 

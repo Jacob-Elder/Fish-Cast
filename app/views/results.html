@@ -41,18 +41,18 @@
 															<!-- TRIP PLANNER -->
 	<div class="trip_planner" ng-if="showTripPlanner">
 		<div class="date_picker">
-			<form class="date_form" ng-submit="tripSearch()">
+			<form class="date_form" ng-submit="tripSearch(start_date, end_date)">
 			<label for="start_date">Start: 
-				<input type="date" name="start_date" ng-model="start_date">
+				<input type="date" name="formData.start_date" ng-model="start_date">
 			</label>
 			<label for="end_date">End: 
-				<input type="date" name="end_date" ng-model="end_date">
+				<input type="date" name="formData.end_date" ng-model="end_date">
 			</label>
 			<input type="submit" name="search" value="Search">
 			</form>
 		</div>
-		{{start_date}}
-		{{end_date}}
+		{{formData.start_date}}
+		{{formData.end_date}}
 	</div>
 
 </div>

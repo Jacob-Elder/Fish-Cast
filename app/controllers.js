@@ -32,7 +32,7 @@ angular.module("fish-cast")
                         forecast.highTides = [];
                         forecast.formattedDate = forecast.date.pretty;
                         forecast.formattedDate = forecast.formattedDate.split(' ');
-                        //Change the date to number format
+                        //Change the month in the weather forecast to a number
                         switch(forecast.formattedDate[4]){
                             case "January":
                                 forecast.formattedDate[4] = '01';
@@ -81,6 +81,7 @@ angular.module("fish-cast")
                         method: 'GET',
                         url: 'http://api.wunderground.com/api/8511c7dcba1454f3/conditions/q/CA/' + searchService.location + '.json'
                     }).then(function successCallback(response) {
+                        //set the latitude and longitude for google maps
                         searchService.lat = response.data.current_observation.display_location.latitude;
                         searchService.lng = response.data.current_observation.display_location.longitude;
                         searchService.city = response.data.current_observation.display_location.full;
@@ -89,15 +90,18 @@ angular.module("fish-cast")
                             url: 'http://www.worldtides.info/api?extremes&lat=' + searchService.lat + '&lon=' + searchService.lng + '&length=' + 861640 + '&maxcalls=2' + '&key=' + 'aa7eeccd-b1cc-4752-9e59-cdcfa7e3ddaf',
                         }).then(function(response){
                             console.log(response);
+                            //Format the tide info to be the same as weather forecast, So they can be paired up
                             searchService.tides = response.data.extremes;
                             searchService.tides.forEach(function(tide){
                                 tide.date = tide.date.split("T");
                                 tide.date = tide.date[0];
+                                //Match the tides with the appropriate day from the weather forecast
                                 for (var i = 0; i < searchService.forecast.length; i++) {
                                     if (tide.date == searchService.forecast[i].formattedDate) {
                                         searchService.forecast[i].tides.push(tide);
                                     }
                                 }
+                                //Seperate the tides for each day into Low and High tides
                                 for (var i = 0; i < searchService.forecast.length; i++){
                                     for (var j = 0; j < searchService.forecast[i].tides.length; j++){
                                         if (searchService.forecast[i].tides[j].type == "Low") {
@@ -112,9 +116,6 @@ angular.module("fish-cast")
                                     }
                                 }
                             });
-                            for (var i = 0; i < searchService.forecast.length; i++) {
-                                searchService.forecast[i].lowTides.sort(function(a,b){return a.dt - b.dt});
-                            }
                             $timeout(function(){$state.go('results')}, 1000);
                         });
                     });
@@ -134,6 +135,7 @@ angular.module("fish-cast")
         $timeout(checkForError, 1000);
     }
 
+    //callback function to display an error message if the location isn't found
     function checkForError() {
         $scope.error = searchService.error;
         if ($scope.error == true) {
@@ -141,6 +143,7 @@ angular.module("fish-cast")
         }
     };
 
+    //callback function to get rid of the error message
     function resetError() {
         $scope.error = false;
     };
@@ -154,4 +157,20 @@ angular.module("fish-cast")
     $scope.map = { center: { latitude: $scope.lat, longitude: $scope.lng }, zoom: 11 };
     $scope.forecast = searchService.forecast;
     console.log($scope.forecast);
+
+
+
+    $scope.show10Day = true;
+
+    $scope.click10Day = function(){
+        $scope.show10Day = true;
+        $scope.showTripPlanner = false;
+    }
+
+    $scope.clickTripPlanner = function(){
+        $scope.showTripPlanner = true;
+        $scope.show10Day = false;
+    }
+
+
 })

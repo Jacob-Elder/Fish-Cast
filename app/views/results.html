@@ -6,16 +6,18 @@
 
 <h2 class="city">{{city}}</h2>
 
-<div class="tab selected">
+<div class="tab" ng-click="click10Day()" ng-class="{ 'selected' : show10Day}">
 	<h2>10 Day Forecast</h2>
 </div>
 
-<div class="tab">
+<div class="tab" ng-click="clickTripPlanner()" ng-class="{ 'selected' : showTripPlanner}">
 	<h2>Trip Planner</h2>
 </div>
 
 <div class="results_section">
-	<div class="daily_forecast" ng-repeat="day in forecast">
+
+															<!-- 10 DAY FORECAST -->
+	<div class="daily_forecast" ng-repeat="day in forecast" ng-if="show10Day">
 		<div>
 			<h3>{{day.date.weekday}}  {{day.date.month}}/{{day.date.day}}</h3>
 			<img src='{{day.icon_url}}'>
@@ -35,4 +37,19 @@
 			<p ng-repeat="highTide in day.highTides">{{highTide.dt * 1000 | date:'h:mm a'}} : {{highTide.height}} ft</p>
 		</div>
 	</div>
+
+															<!-- TRIP PLANNER -->
+	<div class="trip_planner" ng-if="showTripPlanner">
+		<div class="date_picker">
+			<form class="date_form">
+			<label for="start_date">Start: 
+				<input type="date" name="start_date">
+			</label>
+			<label for="end_date">End: 
+				<input type="date" name="end_date">
+			</label>
+			</form>
+		</div>
+	</div>
+
 </div>

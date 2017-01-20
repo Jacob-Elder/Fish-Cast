@@ -6,11 +6,11 @@
 
 <h2 class="city">{{city}}</h2>
 
-<div class="tab" ng-click="click10Day()" ng-class="{ 'selected' : show10Day}">
+<div class="tab" id="tab1" ng-click="click10Day()" ng-class="{ 'selected' : show10Day}">
 	<h2>10 Day Forecast</h2>
 </div>
 
-<div class="tab" ng-click="clickTripPlanner()" ng-class="{ 'selected' : showTripPlanner}">
+<div class="tab" id="tab2" ng-click="clickTripPlanner()" ng-class="{ 'selected' : showTripPlanner}">
 	<h2>Trip Planner</h2>
 </div>
 
@@ -19,7 +19,7 @@
 															<!-- 10 DAY FORECAST -->
 	<div class="daily_forecast" ng-repeat="day in forecast" ng-if="show10Day">
 		<div>
-			<h3>{{day.date.weekday}}  {{day.date.month}}/{{day.date.day}}</h3>
+			<h3 class="forecastdate">{{day.date.weekday}}  {{day.date.month}}/{{day.date.day}}</h3>
 			<img src='{{day.icon_url}}'>
 			<h3>{{day.conditions}}</h3>
 			<div>
@@ -51,8 +51,25 @@
 			<input type="submit" name="search" value="Search">
 			</form>
 		</div>
-		{{formData.start_date}}
-		{{formData.end_date}}
+		<div class="tripResults" ng-if="tripResults">
+			<h3><strong>{{tripResults.title}}</strong></h3>
+			<p>{{tripResults.cloud_cover.cond}}</p>
+			<div class="tripResultsSubset">
+				<h4><strong>Temperatures</strong></h4>
+				<p><strong>Average:</strong>  {{tripResults.temp_low.avg.F}} - {{tripResults.temp_high.avg.F}}&degF</p>
+				<p><strong>Min: </strong>  {{tripResults.temp_low.min.F}}&degF</p>
+				<p><strong>Max: </strong>  {{tripResults.temp_high.max.F}}&degF</p>
+			</div>
+			<div class="tripResultsSubset">
+				<h4><strong>Chances Of</strong></h4>
+				<p><strong>Rain: </strong>  {{tripResults.chance_of.chanceofprecip.percentage}}&#37</p>
+				<p><strong>Snow: </strong>  {{tripResults.chance_of.chanceofsnowday.percentage}}&#37</p>
+				<p><strong>Wind > 10mph: </strong>  {{tripResults.chance_of.chanceofwindyday.percentage}}&#37</p>
+			</div>
+			<line-graph>
+				<svg id="graph"></svg>
+			</line-graph>
+		</div>
 	</div>
 
 </div>

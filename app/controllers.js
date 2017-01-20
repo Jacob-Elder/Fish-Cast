@@ -8,6 +8,7 @@ angular.module("fish-cast")
     this.error = false;
     this.tides;
     this.tripResults;
+    this.tripTides;
 
     var searchService = this;
 
@@ -123,8 +124,9 @@ angular.module("fish-cast")
 
     };
 
-    this.tripSearch = function(tripResults){
+    searchService.tripSearch = function(tripResults, tripTides){
         searchService.tripResults = tripResults;
+        searchService.tripTides = tripTides;
     }
 
 })
@@ -170,6 +172,7 @@ angular.module("fish-cast")
     $scope.end_epoch;
     $scope.tripLength;
     $scope.tripResults;
+    $scope.tripTides;
 
 
     $scope.show10Day = true;
@@ -208,11 +211,10 @@ angular.module("fish-cast")
                 url: "https://www.worldtides.info/api?extremes&lat=" + $scope.lat + "&lon=" + $scope.lng + "&start=" + $scope.start_epoch + "&length=" + $scope.tripLength + "&key=aa7eeccd-b1cc-4752-9e59-cdcfa7e3ddaf"
             }).then(function(response){
                 console.log(response);
+                $scope.tripTides = response.data.extremes;
+                searchService.tripSearch($scope.tripResults, $scope.tripTides);
             });
         });
-
-
-        searchService.tripSearch();
     }
 
     function getFormattedDate(date) {
@@ -222,6 +224,5 @@ angular.module("fish-cast")
         day = day.length > 1 ? day : '0' + day;
         return month + day;
     }
-
 
 })
